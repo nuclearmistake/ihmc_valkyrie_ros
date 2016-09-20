@@ -1,11 +1,13 @@
 <launch>
   <param name="use_sim_time" value="true"/>
+  <arg name="headless" default="true"/>
   <arg name="use_local_build" default="true" />
   <arg name="ihmc_network_file" default="$(find ihmc_valkyrie_ros)/configurations/IHMCNetworkParametersSim.ini" />
   <arg name="description_model" default="$(find val_description)/model/urdf/valkyrie_sim.urdf" />
   <arg name="starting_location" default="DEFAULT" />
   <arg name="tf_prefix" default="NONE" />
-  <arg name="scs_args" default="--offline" />
+  <arg name="scs_args" value="-d --offline" if="$(arg headless)" />
+  <arg name="scs_args" value="--offline" unless="$(arg headless)" />
 
   <include file="$(find ihmc_ros_common)/launch/robot_description_common.launch">
     <arg name="robot_name" value="valkyrie" />
